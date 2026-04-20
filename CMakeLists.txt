@@ -12,3 +12,11 @@ add_executable(example2 examples/example2.cpp)
 
 target_link_libraries(example1 print)
 target_link_libraries(example2 print)
+
+install(TARGETS print example1 example2
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+install(DIRECTORY include/ DESTINATION include)
