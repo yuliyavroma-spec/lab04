@@ -8,26 +8,40 @@ on:
 
 jobs:
   build-linux:
+    name: Linux - ${{ matrix.compiler }}
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
     
-    - name: Install CMake
-      run: sudo apt-get update && sudo apt-get install -y cmake
-      
-    - name: Configure
-      run: cmake -B build
-      
-    - name: Build
-      run: cmake --build build
-
-  build-windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v4
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        cmake_version: ["3.10", "3.22"]
     
-    - name: Configure
-      run: cmake -B build
-      
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup CMake ${{ matrix.cmake_version }}
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: ${{ matrix.cmake_version }}
+    
+    - name: Configure with CMake
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=../install
+    
     - name: Build
-      run: cmake --build build
+      run: |
+        cd build
+        cmake --build .
+    
+    - name: Install
+      run: |
+        cd build
+        cmake --build . --target install
+    
+    - name: Verify installation
+      run: |
+        ls -la install/
+        test -d install/bin || test -d install/lib
