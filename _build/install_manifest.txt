@@ -1,0 +1,4 @@
+/home/yulia/yuliyavroma-spec/workspace/projects/lab03/_install/lib/libprint.a
+/home/yulia/yuliyavroma-spec/workspace/projects/lab03/_install/include/print.hpp
+/home/yulia/yuliyavroma-spec/workspace/projects/lab03/_install/cmake/print-config.cmake
+/home/yulia/yuliyavroma-spec/workspace/projects/lab03/_install/cmake/print-config-noconfig.cmake
